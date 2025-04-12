@@ -4,6 +4,8 @@ import './index.css'
 import App from './App.jsx'
 import { createBrowserRouter, RouterProvider } from 'react-router-dom';
 import {LandingPage,Register,Login} from './pages';
+import { Provider } from 'react-redux';
+import { Store } from './app/store.js';
 
 // create routes
 const router = createBrowserRouter([
@@ -21,8 +23,8 @@ const router = createBrowserRouter([
 
 createRoot(document.getElementById('root')).render(
   <StrictMode>
+    <Provider store={Store}>
     <RouterProvider router={router} />
-
-
+    </Provider>
   </StrictMode>,
 )
