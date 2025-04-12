@@ -1,14 +1,16 @@
 import { Button } from '@/components/ui/button'
 import { Input } from '@/components/ui/input'
 import { Label } from '@/components/ui/label'
-import { Link } from 'react-router-dom'
-import { useState } from 'react'
+import { Link, useNavigate } from 'react-router-dom'
 import { Loader2 } from 'lucide-react'
 import link from "@/data/links.json"
 import { useForm } from 'react-hook-form'
+import { useLoginUserMutation } from '@/app/services/authApi'
+import { toast } from 'sonner'
 
 function Login() {
-    const [loading, setLoading] = useState(false);
+    const [loginUser, { isLoading }] = useLoginUserMutation();
+    const navigate = useNavigate();
     const {
         register,
         reset,
@@ -18,7 +20,14 @@ function Login() {
 
     // handle Register func 
     function handleLogin(userInput) {
-        console.log(userInput);
+        loginUser(userInput).unwrap()
+            .then((data) => {
+                navigate("/dashboard");
+            })
+            .catch((error) => {
+                toast.error(error?.data?.message);
+            })
+        // reset from 
         reset()
     }
 
@@ -89,9 +98,9 @@ function Login() {
                                     {errors.password && <span className='text-sm text-destructive'>{errors.password.message}</span>}
                                 </div>
 
-                                <Button type="submit" className="w-full" disabled={loading}>
+                                <Button type="submit" className="w-full" disabled={isLoading}>
                                     {
-                                        loading ? <Loader2 className='size-6 animate-spin' /> :
+                                        isLoading ? <Loader2 className='size-6 animate-spin' /> :
                                             "Login"
                                     }
                                 </Button>
