@@ -7,7 +7,7 @@ import { Loader2 } from 'lucide-react'
 import link from "@/data/links.json"
 import { useForm } from 'react-hook-form'
 
-function Register() {
+function Login() {
     const [loading, setLoading] = useState(false);
     const {
         register,
@@ -17,7 +17,7 @@ function Register() {
     } = useForm({ mode: "onChange" })
 
     // handle Register func 
-    function handleRegister(userInput) {
+    function handleLogin(userInput) {
         console.log(userInput);
         reset()
     }
@@ -26,7 +26,7 @@ function Register() {
         <div className="flex min-h-svh flex-col items-center justify-center gap-6 bg-background p-6 md:p-10">
             <div className="w-full max-w-sm">
                 <div className="flex flex-col gap-6">
-                    <form onSubmit={handleSubmit(handleRegister)}>
+                    <form onSubmit={handleSubmit(handleLogin)}>
                         <div className="flex flex-col gap-6">
                             <div className="flex flex-col items-center gap-2">
                                 {/* logo  */}
@@ -38,34 +38,13 @@ function Register() {
                                 </Link>
                                 <h1 className="text-xl font-bold">Welcome to QuickFormX</h1>
                                 <div className="text-center text-sm">
-                                    Already have a Account?
-                                    <Link to="/login" className="ml-1 underline underline-offset-4">
-                                        Login
+                                    don't have a Account?
+                                    <Link to="/register" className="ml-1 underline underline-offset-4">
+                                        Register
                                     </Link>
                                 </div>
                             </div>
                             <div className="flex flex-col gap-6">
-                                {/* name  */}
-                                <div className="grid gap-2">
-                                    <Label htmlFor="name">Name</Label>
-                                    <Input
-                                        id="name"
-                                        type="text"
-                                        {...register("name", {
-                                            required: "Name is Required",
-                                            minLength: { value: 3, message: "Name must be more then 3 characters" },
-                                            maxLength: { value: 60, message: "Name must no more then 60 characters" },
-                                            pattern: {
-                                                value: /^[a-zA-Z\s]+$/,
-                                                message: "Only alphabets and spaces allowed",
-                                            }
-                                        })}
-                                        aria-invalid={errors.name ? "true" : "false"}
-                                        placeholder="Arya"
-                                        required
-                                    />
-                                    {errors.name && <span className='text-sm text-destructive'>{errors.name.message}</span>}
-                                </div>
                                 {/* email  */}
                                 <div className="grid gap-2">
                                     <Label htmlFor="email">Email</Label>
@@ -113,7 +92,7 @@ function Register() {
                                 <Button type="submit" className="w-full" disabled={loading}>
                                     {
                                         loading ? <Loader2 className='size-6 animate-spin' /> :
-                                            "Register"
+                                            "Login"
                                     }
                                 </Button>
                             </div>
@@ -130,7 +109,7 @@ function Register() {
                                             fill="currentColor"
                                         />
                                     </svg>
-                                    Continue with Apple
+                                    Login with Apple
                                 </Button>
                                 <Button type="button" variant="outline" className="w-full">
                                     <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24">
@@ -139,7 +118,7 @@ function Register() {
                                             fill="currentColor"
                                         />
                                     </svg>
-                                    Continue with Google
+                                    Login with Google
                                 </Button>
                             </div>
                         </div>
@@ -154,4 +133,4 @@ function Register() {
     )
 }
 
-export default Register
+export default Login
