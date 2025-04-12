@@ -5,28 +5,25 @@ export const AuthApi = Api.injectEndpoints({
         // register api call 
         registerUser: builder.mutation({
             query: (userInput) => ({
-                url: "/users/register",
+                url: "/auth/register",
                 method: "POST",
                 body: JSON.stringify(userInput)
             }),
-            transformResponse: (data) => data?.data
         }),
         // login api call 
         loginUser: builder.mutation({
             query: (userInput) => ({
-                url: "/users/login",
+                url: "/auth/login",
                 method: "POST",
                 body: JSON.stringify(userInput)
             }),
-            transformResponse: (data) => data?.data
         }),
         // logout api call 
         logoutUser: builder.mutation({
             query: () => ({
-                url: "/users/logout",
+                url: "/auth/logout",
                 method: "POST",
             }),
-            transformResponse: (data) => data?.data
         }),
     }),
 });
