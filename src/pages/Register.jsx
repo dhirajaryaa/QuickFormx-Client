@@ -1,26 +1,35 @@
-import { Button } from '@/components/ui/button'
-import { Input } from '@/components/ui/input'
-import { Label } from '@/components/ui/label'
-import { Link } from 'react-router-dom'
-import { useState } from 'react'
-import { Loader2 } from 'lucide-react'
-import link from "@/data/links.json"
-import { useForm } from 'react-hook-form'
+import { Button } from '@/components/ui/button';
+import { Input } from '@/components/ui/input';
+import { Label } from '@/components/ui/label';
+import { Link, useNavigate } from 'react-router-dom';
+import { Loader2 } from 'lucide-react';
+import link from "@/data/links.json";
+import { useForm } from 'react-hook-form';
+import { useRegisterUserMutation } from '@/app/services/authApi';
+import { toast } from 'sonner';
 
 function Register() {
-    const [loading, setLoading] = useState(false);
+    const [registerUser, { isLoading }] = useRegisterUserMutation();
+    const navigate = useNavigate();
     const {
         register,
         reset,
         handleSubmit,
         formState: { errors }
-    } = useForm({ mode: "onChange" })
+    } = useForm({ mode: "onChange" });
 
     // handle Register func 
     function handleRegister(userInput) {
-        console.log(userInput);
+        registerUser(userInput).unwrap()
+            .then((data) => {
+                navigate("/login")
+            }
+            ).catch((error) => {
+                toast.error(error?.data?.message);
+            })
+        // clear form 
         reset()
-    }
+    };
 
     return (
         <div className="flex min-h-svh flex-col items-center justify-center gap-6 bg-background p-6 md:p-10">
@@ -110,9 +119,9 @@ function Register() {
                                     {errors.password && <span className='text-sm text-destructive'>{errors.password.message}</span>}
                                 </div>
 
-                                <Button type="submit" className="w-full" disabled={loading}>
+                                <Button type="submit" className="w-full" disabled={isLoading}>
                                     {
-                                        loading ? <Loader2 className='size-6 animate-spin' /> :
+                                        isLoading ? <Loader2 className='size-6 animate-spin' /> :
                                             "Register"
                                     }
                                 </Button>
