@@ -5,7 +5,7 @@ import { Accordion, AccordionContent, AccordionItem, AccordionTrigger } from "@/
 import { Card } from "@/components/ui/card"
 import { Badge } from "@/components/ui/badge"
 import hero from "@/assets/hero.png";
-import {Link} from "react-router"
+import {Link} from "react-router-dom"
 
 export default function LandingPage() {
   return (
@@ -65,7 +65,7 @@ export default function LandingPage() {
                   🚀 Get Started for Free
                 </Button>
                 </Link>
-                <a href="docs.quickformx.in">
+                <a href="https://docs.quickformx.in" target="_blank">
                 <Button variant="outline" size="lg" >
                   📚 View Docs
                 </Button>
