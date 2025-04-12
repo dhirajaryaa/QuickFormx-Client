@@ -3,7 +3,7 @@ import { createRoot } from 'react-dom/client'
 import './index.css'
 import App from './App.jsx'
 import { createBrowserRouter, RouterProvider } from 'react-router-dom';
-import LandingPage from './pages/LandingPage';
+import {LandingPage,Register} from './pages';
 
 // create routes
 const router = createBrowserRouter([
@@ -12,7 +12,8 @@ const router = createBrowserRouter([
     element: <App />,
     children: [
       { index: true, element: <LandingPage /> },
-      { index: true, path: "/home", element: <LandingPage /> }
+      {  path: "/home", element: <LandingPage /> },
+      {  path: "/register", element: <Register /> }
     ]
   }
 ])
