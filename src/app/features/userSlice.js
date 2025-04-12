@@ -6,7 +6,7 @@ const initialState = {
     isAuthorized: false
 }
 
-export const authSlice = createSlice({
+export const userSlice = createSlice({
     name: 'user',
     initialState,
     reducers: {
@@ -21,6 +21,6 @@ export const authSlice = createSlice({
     }
 });
 
-export const AuthSlice = authSlice.reducer;
+export const UserSlice = userSlice.reducer;
 
-export const { setUser, removeUser } = authSlice.actions;
+export const { setUser, removeUser } = userSlice.actions;
