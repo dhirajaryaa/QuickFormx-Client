@@ -124,7 +124,8 @@
 }
 
 @layer components{
-  body {
+  html{
+    scroll-behavior: smooth;
     font-family: 'Poppins', sans-serif;
   }
 }
