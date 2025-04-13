@@ -1,8 +1,9 @@
+import Layout from "@/layout/Layout"
 function Dashboard() {
   return (
-    <div>
+    <Layout>
       Dashboard
-    </div>
+    </Layout>
   )
 };
 
