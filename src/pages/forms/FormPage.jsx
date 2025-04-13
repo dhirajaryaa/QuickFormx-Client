@@ -3,11 +3,9 @@ import { setActiveTab } from '@/app/features/uiSlice'
 import { useGetAllFormsQuery } from '@/app/services/formApi'
 import { FormCard, SearchBar } from '@/components/custom'
 import { Button } from '@/components/ui/button'
-import { Card, CardContent } from '@/components/ui/card'
 import Layout from '@/layout/Layout'
 import { PlusCircle } from 'lucide-react'
 import { useEffect } from 'react'
-import { useState } from 'react'
 import { useDispatch } from 'react-redux'
 import { Link } from 'react-router-dom'
 
@@ -40,7 +38,7 @@ function FormPage() {
                 {/* list form  */}
                 <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4 p-3 mt-2">
                     {forms && forms.map((form) => (
-                       <FormCard form={form} key={form._id}/>
+                        <FormCard form={form} key={form._id} />
                     ))}
                 </div>
             </section>
