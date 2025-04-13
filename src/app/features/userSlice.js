@@ -14,7 +14,7 @@ export const userSlice = createSlice({
         setUser: (state, action) => {
             state.user = action.payload.user;
             state.token = action.payload.token;
-            state.isAuthorized = !state.isAuthorized;
+            state.isAuthorized = true;
         },
         // remove user 
         removeUser: (state) => { initialState }
