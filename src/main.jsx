@@ -3,7 +3,7 @@ import { createRoot } from 'react-dom/client'
 import './index.css'
 import App from './App.jsx'
 import { createBrowserRouter, RouterProvider } from 'react-router-dom';
-import { LandingPage, Register, Login, Dashboard } from './pages';
+import { LandingPage, Register, Login, Dashboard, NotFound } from './pages';
 import { Provider } from 'react-redux';
 import { Store } from './app/store.js';
 import ProtectedRoute from './components/custom/ProtectedRoute';
@@ -24,7 +24,8 @@ const router = createBrowserRouter([
         children: [
           { path: "/dashboard", element: <Dashboard /> }
         ]
-      }
+      },
+      { path: "*", element: <NotFound /> },
     ]
   }
 ])

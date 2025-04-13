@@ -2,5 +2,6 @@ import LandingPage from "./LandingPage";
 import Register from "./Register";
 import Login from "./Login";
 import Dashboard from "./Dashboard";
+import NotFound from "./NotFound";
 
-export {LandingPage,Register,Login,Dashboard}
+export {LandingPage,Register,Login,Dashboard,NotFound}

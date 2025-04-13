@@ -26,33 +26,30 @@ import {
     SidebarMenuItem,
 } from "@/components/ui/sidebar"
 import { Navbar } from "."
+import { NotepadText } from "lucide-react";
+import { Inbox } from "lucide-react";
 
 
 const navMainMenu = [
     {
         title: "Dashboard",
         url: "/dashboard",
-        icon: LayoutDashboardIcon,
+        icon: < LayoutDashboardIcon className="size-9"/>,
     },
     {
-        title: "Lifecycle",
-        url: "#",
-        icon: ListIcon,
+        title: "Forms",
+        url: "/forms",
+        icon: <NotepadText className="size-9"/>,
+    },
+    {
+        title: "Submissions",
+        url: "/submission",
+        icon: <Inbox className="size-9"/>,
     },
     {
         title: "Analytics",
-        url: "#",
-        icon: BarChartIcon,
-    },
-    {
-        title: "Projects",
-        url: "#",
-        icon: FolderIcon,
-    },
-    {
-        title: "Team",
-        url: "#",
-        icon: UsersIcon,
+        url: "/analytics",
+        icon: < BarChartIcon className="size-9"/>,
     },
 ]
 
