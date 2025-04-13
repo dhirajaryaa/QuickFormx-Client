@@ -7,10 +7,13 @@ import link from "@/data/links.json"
 import { useForm } from 'react-hook-form'
 import { useLoginUserMutation } from '@/app/services/authApi'
 import { toast } from 'sonner'
+import { useDispatch } from 'react-redux'
+import { setUser } from '@/app/features/userSlice'
 
 function Login() {
     const [loginUser, { isLoading }] = useLoginUserMutation();
     const navigate = useNavigate();
+    const dispatch = useDispatch();
     const {
         register,
         reset,
@@ -21,7 +24,8 @@ function Login() {
     // handle Register func 
     function handleLogin(userInput) {
         loginUser(userInput).unwrap()
-            .then((data) => {
+            .then((data) => {                
+                dispatch(setUser({user:data?.user,token:data?.accessToken}));
                 navigate("/dashboard");
             })
             .catch((error) => {

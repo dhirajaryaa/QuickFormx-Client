@@ -9,6 +9,7 @@ export const AuthApi = Api.injectEndpoints({
                 method: "POST",
                 body: JSON.stringify(userInput)
             }),
+            transformResponse:(data)=>data?.data
         }),
         // login api call 
         loginUser: builder.mutation({
@@ -17,6 +18,7 @@ export const AuthApi = Api.injectEndpoints({
                 method: "POST",
                 body: JSON.stringify(userInput)
             }),
+            transformResponse:(data)=>data?.data
         }),
         // logout api call 
         logoutUser: builder.mutation({
@@ -24,6 +26,7 @@ export const AuthApi = Api.injectEndpoints({
                 url: "/auth/logout",
                 method: "POST",
             }),
+            transformResponse:(data)=>data?.data
         }),
     }),
 });
