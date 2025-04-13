@@ -27,7 +27,7 @@ function FormPage() {
                     {/* search form  */}
                     <SearchBar />
                     {/* add form page  */}
-                    <Link to={"/pages/create"}>
+                    <Link to={"/forms/create"}>
                         <Button variant={'destructive'}>
                             <PlusCircle className="size-6" />
                             New Form

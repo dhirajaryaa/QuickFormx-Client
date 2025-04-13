@@ -5,14 +5,23 @@ export const FormApi = Api.injectEndpoints({
         // get all forms 
         getAllForms: builder.query({
             query: (userInput) => ({
-                url: "forms/",
+                url: "forms",
                 method: "GET",
                 body: JSON.stringify(userInput)
             }),
-            transformResponse:(data)=>data?.data
+            transformResponse: (data) => data?.data
+        }),
+        // create new Form 
+        createForm: builder.mutation({
+            query: (userInput) => ({
+                url: "forms",
+                method: "POST",
+                body: JSON.stringify(userInput)
+            }),
+            transformResponse: (data) => data?.data
         }),
 
     }),
 });
 
-export const { useGetAllFormsQuery } = FormApi
+export const { useGetAllFormsQuery, useCreateFormMutation } = FormApi
