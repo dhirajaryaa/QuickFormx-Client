@@ -7,23 +7,21 @@ import {
     SelectLabel,
     SelectItem,
 } from "@/components/ui/select"
-import { Disc2 } from "lucide-react"
-
 import {
     Text,
     AlignLeft,
     Mail,
+    Disc2,
     Hash,
-    Dot,
     CheckSquare,
     ListTree,
     Calendar,
     UploadCloud
 } from "lucide-react"
 
-function FieldSelector({ onChange }) {
+function FieldSelector({ setFieldType }) {
     return (
-        <Select onValueChange={onChange}>
+        <Select onValueChange={(e) => setFieldType(e)}>
             <SelectTrigger className="w-full">
                 <SelectValue placeholder="Choose Field Type" />
             </SelectTrigger>
