@@ -19,16 +19,16 @@ import {
     UploadCloud
 } from "lucide-react"
 
-function FieldSelector({ setFieldType }) {
+function FieldSelector({ fieldType,setFieldType }) {
     return (
-        <Select onValueChange={(e) => setFieldType(e)}>
+        <Select onValueChange={(e) => setFieldType(e)} defaultValue={fieldType}>
             <SelectTrigger className="w-full">
                 <SelectValue placeholder="Choose Field Type" />
             </SelectTrigger>
             <SelectContent>
                 <SelectGroup>
                     <SelectLabel>Input Fields</SelectLabel>
-                    <SelectItem value="text">
+                    <SelectItem value="text" >
                         <Text className="size-4" />
                         Short Answer
                     </SelectItem>
