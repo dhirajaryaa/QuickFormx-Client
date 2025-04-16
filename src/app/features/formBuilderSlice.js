@@ -9,7 +9,7 @@ const initialState = {
     {
       id: 1,
       type: "text",
-      label: "Untitled Field",
+      label: "untitled field",
       name: nanoid(8),
       required: true,
       placeholder: ""

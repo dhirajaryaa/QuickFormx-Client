@@ -27,10 +27,10 @@ function DynamicField({ field: { id, label,type, placeholder, required } }) {
 
     return (
         <div className='w-full bg-accent/60 border shadow-sm rounded-lg p-4 mt-4 gap-3'>
-            <div className='grid grid-cols-2 gap-2'>
+            <div className='grid grid-cols-1 gap-2 sm:grid-cols-2'>
                 {/* label    */}
-                <div>
-                    <Label htmlFor={`label_${id}`} className={'text-sm sm:text-base'}>Field Name {required && <span className='text-destructive'>*</span>} </Label>
+                <div className='flex items-start flex-col'>
+                    <Label htmlFor={`label_${id}`} className={'text-sm sm:text-base '}>Field Name {required && <span className='text-destructive'>*</span>} </Label>
                     <input
                     value={label}
                     onChange={(e)=>handleLabelChange(id,e.target.value)}

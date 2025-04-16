@@ -1,4 +1,5 @@
 import { addField, setDescription, setTitle } from '@/app/features/formBuilderSlice';
+import { FormPreview, FormSaveBtn } from '@/components/custom';
 import DynamicField from '@/components/custom/forms/DynamicField';
 import { Button } from '@/components/ui/button';
 import Layout from '@/layout/Layout'
@@ -37,21 +38,25 @@ function CreateForm() {
             <ArrowLeft />
             Back
           </Button>
-          <Button onClick={() => setShowPreview(!showPreview)}>
-            {
-              !showPreview ? <>
-                <Eye />
-                Show
-              </> : <>
-                <EyeClosed />
-                Hide
-              </>
-            } Preview
-          </Button>
+          <div className="flex items-center gap-2">
+          {/* save form  */}
+            <FormSaveBtn />
+            <Button onClick={() => setShowPreview(!showPreview)} >
+              {
+                !showPreview ? <>
+                  <Eye />
+                  Show
+                </> : <>
+                  <EyeClosed />
+                  Hide
+                </>
+              } Preview
+            </Button>
+          </div>
         </div>
-        <div className='w-full grid grid-cols-1 gap-2 md:grid-cols-2'>
+        <div className={`flex flex-wrap sm:flex-nowrap gap-2`}>
           {/* form  */}
-          <div className='border-2 h-full w-full rounded-lg p-2'>
+          <div className='border-2 w-full rounded-lg p-2 overflow-y-auto h-[85vh]'>
             <div className='border rounded-lg p-4 w-full shadow-sm'>
               {/* title  */}
               <input value={title} onChange={(e) => dispatch(setTitle(e.target.value))} id="title" name="title" className={"border-0 outline-0 text-xl sm:text-2xl font-medium "} placeholder="Untitled Form" />
@@ -70,19 +75,13 @@ function CreateForm() {
                 <PlusCircle />
                 Add Field
               </Button>
-              <Button >
-                <Save />
-                Save Form
-              </Button>
             </div>
           </div>
 
           {/* preview  */}
           {
             showPreview &&
-            <div className='border-2 h-full w-full rounded-lg p-2'>
-              Preview
-            </div>
+            <FormPreview />
           }
         </div>
       </section>

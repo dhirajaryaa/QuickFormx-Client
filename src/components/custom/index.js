@@ -5,6 +5,8 @@ import Navbar from "./Navbar";
 import SearchBar from "./forms/SearchBar";
 import FormCard from "./forms/FormCard";
 import FieldSelector from "./forms/FieldSelector";
+import FormPreview from "./forms/FormPreview";
+import FormSaveBtn from "./forms/FormSaveBtn";
 
 export {
     ProtectedRoute,
@@ -13,5 +15,7 @@ export {
     Navbar,
     SearchBar,
     FormCard,
-    FieldSelector
+    FieldSelector,
+    FormPreview,
+    FormSaveBtn
 };
