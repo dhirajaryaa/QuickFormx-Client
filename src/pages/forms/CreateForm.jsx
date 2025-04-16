@@ -1,62 +1,90 @@
-import { FormField } from '@/components/custom';
+import { addField, setDescription, setTitle } from '@/app/features/formBuilderSlice';
+import DynamicField from '@/components/custom/forms/DynamicField';
 import { Button } from '@/components/ui/button';
-import { Separator } from '@/components/ui/separator';
 import Layout from '@/layout/Layout'
-import { SaveIcon } from 'lucide-react';
-import { PlusCircle } from 'lucide-react';
+import { ArrowLeft, EyeClosed, PlusCircle, Save, Eye } from 'lucide-react';
+import { nanoid } from 'nanoid';
 import { useState } from 'react';
+import { useDispatch, useSelector } from 'react-redux';
+import { useNavigate } from 'react-router-dom';
+
 
 function CreateForm() {
-  const [dynamicField, setDynamicField] = useState([{
-    id: "1",
-    label: `Untitled Field`,
-    name: "untitled_field",
-    placeholder: "",
-    required: true
-  }]);
-  function handleDynamicFieldAdd() {
-    setDynamicField((prev) => [...prev, {
-      id: dynamicField.length + 1,
-      label: `Untitled Field`,
-      name: `untitled_field`,
-      placeholder: "",
-      required: true
-    }]);
-  };
-  function handleDynamicFieldRemove(id) {
-    setDynamicField(dynamicField.filter((field) => field.id !== id))
-  };
+  const dispatch = useDispatch();
+  const navigate = useNavigate();
+  const { title, description, fields } = useSelector((state) => state.formBuilder);
+  const [showPreview, setShowPreview] = useState("false");
+
+  //! add new field 
+  function handleNewFieldAdd() {
+    dispatch(
+      addField({
+        id: fields.length + 1,
+        type: "text",
+        label: "untitled field",
+        name: nanoid(8),
+        required: true,
+        placeholder: "Enter hint text"
+      })
+    )
+  }
+
   return (
     <Layout>
-      <section className='p-3 mx-auto'>
-        <form action="">
-          <div className='grid grid-col-1 gap-y-2 w-md border-2 shadow-lg p-5 rounded-lg'>
-            {/* title  */}
-            <div className="w-full text-xl mt-3 font-medium sm:text-2xl  outline-0" >
-              Untilled Form
-            </div>
-            <Separator />
-            {/* title  */}
-            <div className="w-full mt-2 text-xs sm:text-sm text-gray-500 outline-0" >
-              Form Description
-            </div>
-            <Separator />
-
-            {/* dynamicField  */}
+      <section className='p-3'>
+        <div className="flex items-center justify-between my-3" >
+          <Button onClick={() => navigate(-1)} type="button" variant={'outline'}>
+            <ArrowLeft />
+            Back
+          </Button>
+          <Button onClick={() => setShowPreview(!showPreview)}>
             {
-              dynamicField?.map((field) => <FormField dynamicField={field} key={field.id} handleDynamicFieldRemove={handleDynamicFieldRemove} />)
-            }
-
-            <div className='flex justify-between items-center mt-2'>
-              <Button type="button" variant={'outline'} onClick={handleDynamicFieldAdd} size={"sm"} >
-                <PlusCircle /> Add Field
+              !showPreview ? <>
+                <Eye />
+                Show
+              </> : <>
+                <EyeClosed />
+                Hide
+              </>
+            } Preview
+          </Button>
+        </div>
+        <div className='w-full grid grid-cols-1 gap-2 md:grid-cols-2'>
+          {/* form  */}
+          <div className='border-2 h-full w-full rounded-lg p-2'>
+            <div className='border rounded-lg p-4 w-full shadow-sm'>
+              {/* title  */}
+              <input value={title} onChange={(e) => dispatch(setTitle(e.target.value))} id="title" name="title" className={"border-0 outline-0 text-xl sm:text-2xl font-medium "} placeholder="Untitled Form" />
+              {/* description  */}
+              <textarea value={description} onChange={(e) => dispatch(setDescription(e.target.value))} id="description" name="description" className={"w-full border-0 outline-0 font-base text-sm mt-3 bg-accent p-3 rounded-lg resize-none"} placeholder="Enter Form Description" rows={5} />
+            </div>
+            <div className='mt-4'>
+              {
+                fields?.map((field) =>
+                  <DynamicField key={field.id} field={field} />
+                )
+              }
+            </div>
+            <div className="flex items-center justify-between gap-2 mt-4" >
+              <Button onClick={handleNewFieldAdd} type="button" variant={'outline'}>
+                <PlusCircle />
+                Add Field
               </Button>
-              <Button type="submit" onClick={handleDynamicFieldAdd} size={"sm"} >
-                <SaveIcon /> Save Form
+              <Button >
+                <Save />
+                Save Form
               </Button>
             </div>
           </div>
-        </form>
+
+          {/* preview  */}
+          {
+            showPreview &&
+            <div className='border-2 h-full w-full rounded-lg p-2'>
+              Preview
+            </div>
+          }
+        </div>
       </section>
     </Layout>
   )

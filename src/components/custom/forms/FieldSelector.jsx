@@ -1,3 +1,4 @@
+import { updateFieldType } from "@/app/features/formBuilderSlice";
 import {
     Select,
     SelectTrigger,
@@ -18,10 +19,18 @@ import {
     Calendar,
     UploadCloud
 } from "lucide-react"
+import { useDispatch } from "react-redux"
 
-function FieldSelector({ fieldType,setFieldType }) {
+function FieldSelector({ type,id }) {    
+    
+    const dispatch = useDispatch();
+
+    const handleFieldChange = (id,value)=>{
+        dispatch(updateFieldType({id,type:value}))
+    }
+
     return (
-        <Select onValueChange={(e) => setFieldType(e)} defaultValue={fieldType}>
+        <Select onValueChange={(value) => handleFieldChange(id,value)} defaultValue={type}>
             <SelectTrigger className="w-full">
                 <SelectValue placeholder="Choose Field Type" />
             </SelectTrigger>
@@ -67,10 +76,10 @@ function FieldSelector({ fieldType,setFieldType }) {
                         <Calendar className="size-4" />
                         Date Picker
                     </SelectItem>
-                    <SelectItem value="file">
+                    {/* <SelectItem value="file">
                         <UploadCloud className="size-4" />
                         File Upload
-                    </SelectItem>
+                    </SelectItem> */}
                 </SelectGroup>
             </SelectContent>
         </Select>
