@@ -41,7 +41,7 @@ function CreateForm() {
           <div className="flex items-center gap-2">
           {/* save form  */}
             <FormSaveBtn />
-            <Button onClick={() => setShowPreview(!showPreview)} >
+            <Button type="button" onClick={() => setShowPreview(!showPreview)} >
               {
                 !showPreview ? <>
                   <Eye />
