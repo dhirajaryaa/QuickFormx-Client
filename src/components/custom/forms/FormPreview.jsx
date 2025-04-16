@@ -5,7 +5,7 @@ function FormPreview() {
   const { title, description, fields } = useSelector((state) => state.formBuilder)
 
   return (
-    <div className='border-2 shadow-sm  w-full rounded-lg p-4 bg-white'>
+    <div className='border-2 shadow-sm w-full rounded-lg p-4 bg-white'>
       {/* Form Header */}
       <div className='mb-6'>
         <h3 className='text-2xl font-semibold text-center'>{title}</h3>
@@ -20,13 +20,15 @@ function FormPreview() {
               {field.label} {field.required && <span className='text-red-500'>*</span>}
             </label>
 
-            {/* Text / Email / Number */}
-            {["text", "email", "number","date"].includes(field.type) && (
+            {/* Text / Email / Number / Date */}
+            {["text", "email", "number", "date"].includes(field.type) && (
               <input
                 type={field.type}
                 name={field.name}
                 placeholder={field.placeholder}
-                className='border rounded px-3 py-2 outline-none focus:ring w-full'
+                disabled
+                readOnly
+                className='border rounded px-3 py-2 outline-none focus:ring w-full bg-gray-100 cursor-not-allowed'
               />
             )}
 
@@ -35,7 +37,9 @@ function FormPreview() {
               <textarea
                 name={field.name}
                 placeholder={field.placeholder}
-                className='border rounded px-3 py-2 outline-none focus:ring w-full'
+                disabled
+                readOnly
+                className='border rounded px-3 py-2 outline-none focus:ring w-full bg-gray-100 cursor-not-allowed'
               />
             )}
 
@@ -43,7 +47,8 @@ function FormPreview() {
             {field.type === "select" && (
               <select
                 name={field.name}
-                className='border rounded px-3 py-2 outline-none focus:ring w-full'
+                disabled
+                className='border rounded px-3 py-2 outline-none focus:ring w-full bg-gray-100 cursor-not-allowed'
               >
                 <option value="">Select an option</option>
                 {field.options?.map((option, index) => (
@@ -52,6 +57,30 @@ function FormPreview() {
                   </option>
                 ))}
               </select>
+            )}
+
+            {/* Checkbox List */}
+            {field.type === "checkbox" && field.options?.length > 0 && (
+              <div className='flex flex-col gap-2'>
+                {field.options.map((option, index) => (
+                  <label key={index} className='inline-flex items-center gap-2 text-gray-500'>
+                    <input type='checkbox' name={`${field.name}[]`} value={option} disabled />
+                    <span>{option}</span>
+                  </label>
+                ))}
+              </div>
+            )}
+
+            {/* Radio List */}
+            {field.type === "radio" && field.options?.length > 0 && (
+              <div className='flex flex-col gap-2'>
+                {field.options.map((option, index) => (
+                  <label key={index} className='inline-flex items-center gap-2 text-gray-500'>
+                    <input type='radio' name={field.name} value={option} disabled />
+                    <span>{option}</span>
+                  </label>
+                ))}
+              </div>
             )}
           </div>
         ))}
