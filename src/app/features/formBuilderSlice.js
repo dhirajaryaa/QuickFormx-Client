@@ -12,7 +12,8 @@ const initialState = {
       label: "untitled field",
       name: nanoid(8),
       required: true,
-      placeholder: ""
+      placeholder: "",
+      options: []
     },
   ],
 };
@@ -38,7 +39,7 @@ export const formBuilderSlice = createSlice({
     // delete field 
     deleteField: (state, action) => {
       state.fields = state.fields.filter((field) => field.id !== action.payload);
-    },    
+    },
 
     // Update Label
     updateFieldLabel: (state, action) => {
@@ -56,7 +57,7 @@ export const formBuilderSlice = createSlice({
 
     // Update Type
     updateFieldType: (state, action) => {
-      const { id, type } = action.payload;      
+      const { id, type } = action.payload;
       const field = state.fields.find((f) => f.id === id);
       if (field) field.type = type;
     },
@@ -77,7 +78,15 @@ export const formBuilderSlice = createSlice({
         field.options.push(option);
       }
     },
-
+    // handle Option change
+    handleOptionChange: (state, action) => {
+      const { id, index, option } = action.payload;
+      const field = state.fields.find((f) => f.id === id);
+      if (field) {
+        if (!field.options) field.options = [];
+        field.options[index] = option;
+      }
+    },
     // Remove Last Option
     removeOptionField: (state, action) => {
       const id = action.payload;
@@ -108,4 +117,5 @@ export const {
   updateFieldType,
   updateFieldRequired,
   deleteField,
+  handleOptionChange
 } = formBuilderSlice.actions;

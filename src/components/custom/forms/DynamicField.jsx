@@ -1,12 +1,13 @@
 import { Button } from '@/components/ui/button';
 import { Label } from '@/components/ui/label';
 import { Switch } from '@/components/ui/switch';
-import { Trash2 } from 'lucide-react';
 import { FieldSelector } from '..';
 import { useDispatch } from 'react-redux';
-import { deleteField, updateFieldLabel, updateFieldPlaceholder, updateFieldRequired } from '@/app/features/formBuilderSlice';
+import { addOptionField, deleteField, updateFieldLabel, updateFieldPlaceholder, updateFieldRequired } from '@/app/features/formBuilderSlice';
+import DynamicFieldOptions from './DynamicFieldOptions';
+import { Square, Circle, ListTree, Trash2 } from 'lucide-react';
 
-function DynamicField({ field: { id, label, type, placeholder, required } }) {
+function DynamicField({ field: { id, label, type, placeholder, required, options } }) {
     const dispatch = useDispatch();
 
     const handleDelete = (id) => {
@@ -23,6 +24,10 @@ function DynamicField({ field: { id, label, type, placeholder, required } }) {
 
     const handleRequiredToggle = (id) => {
         dispatch(updateFieldRequired(id))
+    }
+
+    const handleOptionsAdd = () => {
+        dispatch(addOptionField({ id, "option": "" }));
     }
 
     return (
@@ -54,10 +59,44 @@ function DynamicField({ field: { id, label, type, placeholder, required } }) {
                 </div>
             )}
 
+            {/* options  */}
+            {["select", "radio", "checkbox"].includes(type) &&
+                options?.map((item, index) =>
+
+                    <DynamicFieldOptions id={id} key={index} type={type} index={index} option={item} />
+
+                )
+            }
+            {/* add options btn  */}
+            {
+                ["select", "radio", "checkbox"].includes(type) &&
+                <div className='flex gap-2 items-center justify-between w-full text-sm my-2'>
+                    <div className='flex w-full items-center'>
+                        {
+                            type === "checkbox" && <Square />
+                        }
+                        {
+                            type === "radio" && <Circle />
+                        }
+                        {
+                            type === "select" && <ListTree />
+                        }
+
+                        <Button
+                            type="button"
+                            onClick={handleOptionsAdd}
+                            className={"text-blue-600"} variant="ghost">
+                            <span className='text-gray-600 text-xs'>Add Option</span> or add "Other"
+                        </Button>
+                    </div>
+
+                </div>
+            }
+
 
             <div className="flex items-center justify-between gap-2 mt-3">
                 {/* delete btn  */}
-                <Button variant={'destructive'} onClick={() => handleDelete(id)} size={'icon'}>
+                <Button type="button" variant={'destructive'} onClick={() => handleDelete(id)} size={'icon'}>
                     <Trash2 />
                 </Button>
                 {/* required switch  */}

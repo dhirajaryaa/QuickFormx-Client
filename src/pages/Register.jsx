@@ -103,7 +103,7 @@ function Register() {
                                         id="password"
                                         {...register("password", {
                                             required: "Password is Required",
-                                            minLength: { value: 3, message: "Password must be more then 3 characters" },
+                                            minLength: { value: 6, message: "Password must be more then 6 characters" },
                                             maxLength: { value: 60, message: "Password must no more then 60 characters" },
                                             pattern: {
                                                 value: /^(?=.*[A-Z])(?=.*[a-z])(?=.*\d)(?=.*[@$!%*?&])/,
