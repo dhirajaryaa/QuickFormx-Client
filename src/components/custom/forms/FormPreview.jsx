@@ -13,7 +13,7 @@ function FormPreview() {
       </div>
 
       {/* Form Fields */}
-      <form className='space-y-4'>
+      <div className='space-y-4'>
         {fields.map((field) => (
           <div key={field.id} className='flex flex-col gap-1'>
             <label className='font-medium'>
@@ -26,7 +26,6 @@ function FormPreview() {
                 type={field.type}
                 name={field.name}
                 placeholder={field.placeholder}
-                required={field.required}
                 className='border rounded px-3 py-2 outline-none focus:ring w-full'
               />
             )}
@@ -36,7 +35,6 @@ function FormPreview() {
               <textarea
                 name={field.name}
                 placeholder={field.placeholder}
-                required={field.required}
                 className='border rounded px-3 py-2 outline-none focus:ring w-full'
               />
             )}
@@ -45,7 +43,6 @@ function FormPreview() {
             {field.type === "select" && (
               <select
                 name={field.name}
-                required={field.required}
                 className='border rounded px-3 py-2 outline-none focus:ring w-full'
               >
                 <option value="">Select an option</option>
@@ -58,7 +55,7 @@ function FormPreview() {
             )}
           </div>
         ))}
-      </form>
+      </div>
     </div>
   )
 }

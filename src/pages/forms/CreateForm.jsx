@@ -33,7 +33,8 @@ function CreateForm() {
   return (
     <Layout>
       <section className='p-3'>
-        <div className="flex items-center justify-between my-3" >
+        <form >
+        <div className="flex items-center justify-between my-3 " >
           <Button onClick={() => navigate(-1)} type="button" variant={'outline'}>
             <ArrowLeft />
             Back
@@ -56,7 +57,7 @@ function CreateForm() {
         </div>
         <div className={`flex flex-wrap md:flex-nowrap gap-2`}>
           {/* form  */}
-          <div className='border-2 w-full rounded-lg p-2 overflow-y-auto h-[85vh]'>
+          <div className='border-2 w-full rounded-lg p-2 overflow-y-auto md:h-[85vh]'>
             <div className='rounded-lg p-4 w-full'>
               {/* title  */}
               <input value={title} onChange={(e) => dispatch(setTitle(e.target.value))} id="title" name="title" className={"border-0 outline-0 text-xl sm:text-2xl font-medium "} placeholder="Untitled Form" />
@@ -77,13 +78,14 @@ function CreateForm() {
               </Button>
             </div>
           </div>
-
+         
           {/* preview  */}
           {
             showPreview &&
             <FormPreview />
           }
         </div>
+        </form>
       </section>
     </Layout>
   )

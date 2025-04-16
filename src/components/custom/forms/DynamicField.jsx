@@ -37,6 +37,8 @@ function DynamicField({ field: { id, label, type, placeholder, required, options
                 <div className='flex items-start flex-col'>
                     <Label htmlFor={`label_${id}`} className={'text-sm sm:text-base '}>Field Name {required && <span className='text-destructive'>*</span>} </Label>
                     <input
+                    required
+                    placeholder={`Enter Field Name`}
                         value={label}
                         onChange={(e) => handleLabelChange(id, e.target.value)}
                         id={`label_${id}`} className={"border-0 w-full outline-0 border-b-2"} />
@@ -54,7 +56,6 @@ function DynamicField({ field: { id, label, type, placeholder, required, options
                         onChange={(e) => handlePlaceholderChange(id, e.target.value)}
                         className="mt-1 text-sm border-0 w-full outline-0 border-b-2"
                         placeholder="Enter hint text"
-                        required
                     />
                 </div>
             )}
