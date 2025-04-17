@@ -10,7 +10,7 @@ import { useDispatch } from 'react-redux'
 import { Link } from 'react-router-dom'
 
 function FormPage() {
-    const { isLoading, data: forms } = useGetAllFormsQuery();
+    const { isLoading, data: forms,refetch } = useGetAllFormsQuery();
     const dispatch = useDispatch();
     // set forms data in state 
     useEffect(() => {
@@ -38,7 +38,7 @@ function FormPage() {
                 {/* list form  */}
                 <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4 p-3 mt-2">
                     {forms && forms.map((form) => (
-                        <FormCard form={form} key={form._id} />
+                        <FormCard form={form} key={form._id} refetch={refetch} />
                     ))}
                 </div>
             </section>

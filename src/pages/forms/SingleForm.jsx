@@ -5,6 +5,8 @@ import { Skeleton } from '@/components/ui/skeleton'
 import { CalendarDays, Send } from 'lucide-react'
 import Layout from '@/layout/Layout'
 import { NotFound } from '..'
+import { Input } from '@/components/ui/input'
+import { Textarea } from '@/components/ui/textarea'
 
 function SingleForm() {
     const { id } = useParams()
@@ -51,19 +53,19 @@ function SingleForm() {
 
                                 {/* Text / Email / Number / Date */}
                                 {['text', 'email', 'number', 'date'].includes(field.type) && (
-                                    <input
+                                    <Input
                                         type={field.type}
                                         placeholder={field.placeholder}
-                                        className="border px-3 py-2 rounded w-full bg-gray-100 text-gray-600"
+                                        className="border px-3 py-2 rounded w-full bg-background"
                                         readOnly
                                     />
                                 )}
 
                                 {/* Textarea */}
                                 {field.type === 'textarea' && (
-                                    <textarea
+                                    <Textarea
                                         placeholder={field.placeholder}
-                                        className="border px-3 py-2 rounded w-full bg-gray-100 text-gray-600"
+                                        className="border px-3 py-2 rounded w-full bg-background"
                                         readOnly
                                     />
                                 )}
@@ -71,7 +73,7 @@ function SingleForm() {
                                 {/* Select */}
                                 {field.type === 'select' && (
                                     <select
-                                        className="border px-3 py-2 rounded w-full bg-gray-100 text-gray-600"
+                                        className="border px-3 py-2 rounded w-full "
                                         disabled
                                     >
                                         <option value="">Select an option</option>
@@ -85,7 +87,7 @@ function SingleForm() {
                                 {field.type === 'checkbox' && (
                                     <div className="flex flex-col gap-1">
                                         {field.options?.map((opt, i) => (
-                                            <label key={i} className="flex items-center gap-2 text-gray-600">
+                                            <label key={i} className="flex items-center gap-2">
                                                 <input type="checkbox" disabled /> {opt}
                                             </label>
                                         ))}
@@ -96,7 +98,7 @@ function SingleForm() {
                                 {field.type === 'radio' && (
                                     <div className="flex flex-col gap-1">
                                         {field.options?.map((opt, i) => (
-                                            <label key={i} className="flex items-center gap-2 text-gray-600">
+                                            <label key={i} className="flex items-center gap-2">
                                                 <input type="radio" name={field.name} disabled /> {opt}
                                             </label>
                                         ))}
