@@ -14,8 +14,8 @@ function FormPreview() {
 
       {/* Form Fields */}
       <div className='space-y-4'>
-        {fields.map((field) => (
-          <div key={field.id} className='flex flex-col gap-1'>
+        {fields.map((field,index) => (
+          <div key={index} className='flex flex-col gap-1'>
             <label className='font-medium'>
               {field.label} {field.required && <span className='text-red-500'>*</span>}
             </label>

@@ -4,6 +4,7 @@ import { nanoid } from "nanoid";
 // Initial State
 const initialState = {
   title: "Untitled Form",
+  actionType:"add",
   description: "",
   fields: [
     {
