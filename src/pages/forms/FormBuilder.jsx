@@ -64,6 +64,9 @@ function FormBuilder() {
         .then(() => {
           toast.success("Form Saved 😎, Ready to submission");
           navigate("/forms");
+          refetch().unwrap().then((forms) => {
+            dispatch(setForms(forms));
+          });
           dispatch(resetBuilder());
         }).catch((error) => {
           toast.error(error?.data?.message);
