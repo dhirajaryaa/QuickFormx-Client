@@ -8,42 +8,39 @@ import { Button } from '@/components/ui/button';
 import Layout from '@/layout/Layout'
 import { ArrowLeft, EyeClosed, PlusCircle, Save, Eye } from 'lucide-react';
 import { nanoid } from 'nanoid';
-import { useEffect } from 'react';
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { useNavigate, useParams } from 'react-router-dom';
 import { toast } from 'sonner';
 import { NotFound } from '..';
 
-
 function FormBuilder() {
-  const { id: formId } = useParams()
-  const [actionType, setActionType] = useState(formId ? "edit" : "add")
+  const { id: formId } = useParams();
+  const [actionType, setActionType] = useState(formId ? "edit" : "add");
   const dispatch = useDispatch();
   const navigate = useNavigate();
   const { refetch } = useGetAllFormsQuery();
   const [addForm, { isLoading }] = useCreateFormMutation();
   const [updateForm] = useUpdateFormMutation();
+
   const { forms: editForms } = useSelector((state) => state.form);
   const { title, description, fields } = useSelector((state) => state.formBuilder);
-  const [showPreview, setShowPreview] = useState("false");
+  const [showPreview, setShowPreview] = useState(false);
 
-  // update Content 
-  useState(() => {
+  // Setup form data on load
+  useEffect(() => {
     if (actionType === "edit") {
       const editForm = editForms?.find((field) => field._id === formId);
-      if (!editForm) {
-        return <NotFound />
-      }
-      dispatch(setFormData(editForm));
       dispatch(setActiveTab("Edit Form"));
+      if (editForm) {
+        dispatch(setFormData(editForm));
+      }
     } else {
-      dispatch(setActiveTab("Create Form"))
+      dispatch(setActiveTab("Create Form"));
     }
-  }, [])
+  }, [actionType, dispatch, editForms, formId]);
 
-
-  //! add new field 
+  // Add new field
   function handleNewFieldAdd() {
     dispatch(
       addField({
@@ -54,20 +51,20 @@ function FormBuilder() {
         required: true,
         placeholder: ""
       })
-    )
-  };
+    );
+  }
 
-  //! handle form submit 
+  // Handle submit
   function handleFormSubmit(e) {
     e.preventDefault();
     const data = { title, description, fields };
+
     if (actionType === "add") {
       addForm(data).unwrap()
-        .then((data) => {
+        .then(() => {
           toast.success("Form Saved 😎, Ready to submission");
           navigate("/forms");
-          // reset form 
-          dispatch(resetBuilder())
+          dispatch(resetBuilder());
         }).catch((error) => {
           toast.error(error?.data?.message);
         });
@@ -78,28 +75,26 @@ function FormBuilder() {
           navigate("/forms");
           refetch().unwrap().then((forms) => {
             dispatch(setForms(forms));
-          })
-          // reset form 
-          dispatch(resetBuilder())
+          });
+          dispatch(resetBuilder());
         }).catch((error) => {
           toast.error(error?.data?.message);
         });
     }
-  };
+  }
 
   return (
     <Layout>
       <section className='p-3'>
         <form onSubmit={handleFormSubmit}>
-          <div className="flex items-center justify-between my-3 " >
-            <Button onClick={() => navigate(-1)} type="button" variant={'outline'}>
+          <div className="flex items-center justify-between my-3">
+            <Button onClick={() => navigate(-1)} type="button" variant="outline">
               <ArrowLeft />
               Back
             </Button>
             <div className="flex items-center gap-2">
-              {/* save form  */}
               <FormSaveBtn isLoading={isLoading} />
-              <Button type="button" onClick={() => setShowPreview(!showPreview)} >
+              <Button type="button" onClick={() => setShowPreview(prev => !prev)}>
                 {
                   !showPreview ? <>
                     <Eye />
@@ -112,40 +107,47 @@ function FormBuilder() {
               </Button>
             </div>
           </div>
-          <div className={`flex flex-wrap md:flex-nowrap gap-2`}>
-            {/* form  */}
-            <div className='border-2 w-full rounded-lg p-2 overflow-y-auto md:h-[85vh]'>
-              <div className='rounded-lg p-4 w-full'>
-                {/* title  */}
-                <input value={title} onChange={(e) => dispatch(setTitle(e.target.value))} id="title" name="title" className={"border-0 outline-0 text-xl sm:text-2xl font-medium w-full"} placeholder="Untitled Form" />
-                {/* description  */}
-                <textarea value={description} onChange={(e) => dispatch(setDescription(e.target.value))} id="description" name="description" className={"w-full border-0 outline-0 font-base text-sm mt-3 bg-accent p-3 rounded-lg resize-none"} placeholder="Enter Form Description" rows={5} />
+
+          <div className="flex flex-wrap md:flex-nowrap gap-2">
+            <div className="border-2 w-full rounded-lg p-2 overflow-y-auto md:h-[85vh]">
+              <div className="rounded-lg p-4 w-full">
+                <input
+                  value={title}
+                  onChange={(e) => dispatch(setTitle(e.target.value))}
+                  className="border-0 outline-0 text-xl sm:text-2xl font-medium w-full"
+                  placeholder="Untitled Form"
+                />
+                <textarea
+                  value={description}
+                  onChange={(e) => dispatch(setDescription(e.target.value))}
+                  className="w-full border-0 outline-0 font-base text-sm mt-3 bg-accent p-3 rounded-lg resize-none"
+                  placeholder="Enter Form Description"
+                  rows={5}
+                />
               </div>
-              <div className='mt-4'>
+
+              <div className="mt-4">
                 {
                   fields?.map((field, index) =>
-                    <DynamicField key={field.index} field={field} />
+                    <DynamicField key={index} field={field} />
                   )
                 }
               </div>
-              <div className="flex items-center justify-between gap-2 mt-4" >
-                <Button onClick={handleNewFieldAdd} type="button" variant={'outline'}>
+
+              <div className="flex items-center justify-between gap-2 mt-4">
+                <Button onClick={handleNewFieldAdd} type="button" variant="outline">
                   <PlusCircle />
                   Add Field
                 </Button>
               </div>
             </div>
 
-            {/* preview  */}
-            {
-              showPreview &&
-              <FormPreview />
-            }
+            {showPreview && <FormPreview />}
           </div>
         </form>
       </section>
     </Layout>
-  )
+  );
 }
 
 export default FormBuilder;
