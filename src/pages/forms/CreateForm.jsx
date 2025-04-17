@@ -58,7 +58,7 @@ function CreateForm() {
             </Button>
             <div className="flex items-center gap-2">
               {/* save form  */}
-              <FormSaveBtn />
+              <FormSaveBtn isLoading={isLoading}/>
               <Button type="button" onClick={() => setShowPreview(!showPreview)} >
                 {
                   !showPreview ? <>
