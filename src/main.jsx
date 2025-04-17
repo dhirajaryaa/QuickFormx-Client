@@ -3,7 +3,7 @@ import { createRoot } from 'react-dom/client'
 import './index.css'
 import App from './App.jsx'
 import { createBrowserRouter, RouterProvider } from 'react-router-dom';
-import { LandingPage, Register, Login, Dashboard, NotFound, FormPage, CreateForm } from './pages';
+import { LandingPage, Register, Login, Dashboard, NotFound, FormPage, CreateForm, SingleForm } from './pages';
 import { Provider } from 'react-redux';
 import { Store } from './app/store.js';
 import ProtectedRoute from './components/custom/ProtectedRoute';
@@ -26,6 +26,7 @@ const router = createBrowserRouter([
           // Form routes 
           { path: "/forms", element: <FormPage /> },
           { path: "/forms/create", element: <CreateForm /> },
+          { path: "/forms/:id", element: <SingleForm /> },
         ]
       },
       { path: "*", element: <NotFound /> },

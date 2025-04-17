@@ -5,6 +5,7 @@ import Dashboard from "./Dashboard";
 import NotFound from "./NotFound";
 import FormPage from "./forms/FormPage";
 import CreateForm from "./forms/CreateForm";
+import SingleForm from "./forms/SingleForm";
 
 export {
     LandingPage,
@@ -13,5 +14,6 @@ export {
     Dashboard,
     NotFound,
     FormPage,
-    CreateForm
+    CreateForm,
+    SingleForm
 }
