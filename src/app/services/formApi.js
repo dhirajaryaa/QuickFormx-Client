@@ -11,6 +11,14 @@ export const FormApi = Api.injectEndpoints({
             }),
             transformResponse: (data) => data?.data
         }),
+        // get single form
+        getForm: builder.query({
+            query: (id) => ({
+                url: `forms/${id}`,
+                method: "GET",
+            }),
+            transformResponse: (data) => data?.data
+        }),
         // create new Form 
         createForm: builder.mutation({
             query: (userInput) => ({
@@ -24,4 +32,4 @@ export const FormApi = Api.injectEndpoints({
     }),
 });
 
-export const { useGetAllFormsQuery, useCreateFormMutation } = FormApi
+export const { useGetAllFormsQuery, useCreateFormMutation,useGetFormQuery } = FormApi
