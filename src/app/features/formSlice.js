@@ -8,12 +8,11 @@ export const formSlice = createSlice({
         totalSubmission:null
     },
     reducers: {
-        // set active tab 
+        // set form
         setForms: (state, action) => {
             state.forms = action.payload;
             state.totalForms = action.payload?.length;
         },
-      
     }
 });
 

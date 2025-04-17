@@ -17,6 +17,7 @@ import { useDeleteFormMutation } from '@/app/services/formApi';
 import { useDispatch } from 'react-redux';
 import { toast } from 'sonner';
 import { setForms } from '@/app/features/formSlice';
+import { setActiveTab } from '@/app/features/uiSlice';
 
 function FormCard({ form, refetch }) {
     const navigate = useNavigate()
@@ -32,6 +33,7 @@ function FormCard({ form, refetch }) {
     }
 
     function handleFormClick() {
+        dispatch(setActiveTab("View Form"))
         navigate(`/forms/${form._id}`)
     }
 
@@ -94,7 +96,7 @@ function FormCard({ form, refetch }) {
                     <div className="flex gap-2">
                         {/* Edit */}
                         <Button asChild size="icon" variant="outline" onClick={stopBubble}>
-                            <Link to={`/dashboard/forms/${form._id}/edit`}>
+                            <Link to={`/forms/${form._id}/edit`}>
                                 <Edit />
                             </Link>
                         </Button>
@@ -113,7 +115,6 @@ function FormCard({ form, refetch }) {
                                     <Trash2 />
                                 </Button>
                             </AlertDialogTrigger>
-
                             <AlertDialogContent>
                                 <AlertDialogHeader>
                                     <AlertDialogTitle>Delete this form?</AlertDialogTitle>

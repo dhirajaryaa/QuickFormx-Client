@@ -22,6 +22,12 @@ export const formBuilderSlice = createSlice({
   name: "formBuilder",
   initialState,
   reducers: {
+    setFormData: (state, action) => {
+      const { title, description, fields } = action.payload
+      state.title = title
+      state.description = description
+      state.fields = fields
+    },
     // Title
     setTitle: (state, action) => {
       state.title = action.payload;
@@ -106,6 +112,7 @@ export const FormBuilderSlice = formBuilderSlice.reducer;
 
 // Actions export
 export const {
+  setFormData,
   setTitle,
   setDescription,
   resetBuilder,

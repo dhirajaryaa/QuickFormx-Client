@@ -1,23 +1,47 @@
-import { addField, resetBuilder, setDescription, setTitle } from '@/app/features/formBuilderSlice';
-import { useCreateFormMutation } from '@/app/services/formApi';
+import { addField, resetBuilder, setDescription, setFormData, setTitle } from '@/app/features/formBuilderSlice';
+import { setForms } from '@/app/features/formSlice';
+import { setActiveTab } from '@/app/features/uiSlice';
+import { useCreateFormMutation, useGetAllFormsQuery, useUpdateFormMutation } from '@/app/services/formApi';
 import { FormPreview, FormSaveBtn } from '@/components/custom';
 import DynamicField from '@/components/custom/forms/DynamicField';
 import { Button } from '@/components/ui/button';
 import Layout from '@/layout/Layout'
 import { ArrowLeft, EyeClosed, PlusCircle, Save, Eye } from 'lucide-react';
 import { nanoid } from 'nanoid';
+import { useEffect } from 'react';
 import { useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import { useNavigate } from 'react-router-dom';
+import { useNavigate, useParams } from 'react-router-dom';
 import { toast } from 'sonner';
+import { NotFound } from '..';
 
 
-function CreateForm() {
+function FormBuilder() {
+  const { id: formId } = useParams()
+  const [actionType, setActionType] = useState(formId ? "edit" : "add")
   const dispatch = useDispatch();
   const navigate = useNavigate();
+  const { refetch } = useGetAllFormsQuery();
   const [addForm, { isLoading }] = useCreateFormMutation();
+  const [updateForm] = useUpdateFormMutation();
+  const { forms: editForms } = useSelector((state) => state.form);
   const { title, description, fields } = useSelector((state) => state.formBuilder);
   const [showPreview, setShowPreview] = useState("false");
+
+  // update Content 
+  useState(() => {
+    if (actionType === "edit") {
+      const editForm = editForms?.find((field) => field._id === formId);
+      if (!editForm) {
+        return <NotFound />
+      }
+      dispatch(setFormData(editForm));
+      dispatch(setActiveTab("Edit Form"));
+    } else {
+      dispatch(setActiveTab("Create Form"))
+    }
+  }, [])
+
 
   //! add new field 
   function handleNewFieldAdd() {
@@ -37,14 +61,30 @@ function CreateForm() {
   function handleFormSubmit(e) {
     e.preventDefault();
     const data = { title, description, fields };
-    addForm(data).unwrap().then((data) => {
-      toast.success("Form Saved 😎, Ready to submission");
-      navigate("/forms");
-      // reset form 
-      dispatch(resetBuilder())
-    }).catch((error) => {
-      toast.error(error?.data?.message);
-    })
+    if (actionType === "add") {
+      addForm(data).unwrap()
+        .then((data) => {
+          toast.success("Form Saved 😎, Ready to submission");
+          navigate("/forms");
+          // reset form 
+          dispatch(resetBuilder())
+        }).catch((error) => {
+          toast.error(error?.data?.message);
+        });
+    } else {
+      updateForm({ id: formId, data }).unwrap()
+        .then(() => {
+          toast.success("Form Updated 😍");
+          navigate("/forms");
+          refetch().unwrap().then((forms) => {
+            dispatch(setForms(forms));
+          })
+          // reset form 
+          dispatch(resetBuilder())
+        }).catch((error) => {
+          toast.error(error?.data?.message);
+        });
+    }
   };
 
   return (
@@ -58,7 +98,7 @@ function CreateForm() {
             </Button>
             <div className="flex items-center gap-2">
               {/* save form  */}
-              <FormSaveBtn isLoading={isLoading}/>
+              <FormSaveBtn isLoading={isLoading} />
               <Button type="button" onClick={() => setShowPreview(!showPreview)} >
                 {
                   !showPreview ? <>
@@ -83,8 +123,8 @@ function CreateForm() {
               </div>
               <div className='mt-4'>
                 {
-                  fields?.map((field) =>
-                    <DynamicField key={field.id} field={field} />
+                  fields?.map((field, index) =>
+                    <DynamicField key={field.index} field={field} />
                   )
                 }
               </div>
@@ -108,4 +148,4 @@ function CreateForm() {
   )
 }
 
-export default CreateForm;
+export default FormBuilder;

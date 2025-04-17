@@ -4,7 +4,7 @@ import Login from "./Login";
 import Dashboard from "./Dashboard";
 import NotFound from "./NotFound";
 import FormPage from "./forms/FormPage";
-import CreateForm from "./forms/CreateForm";
+import FormBuilder from "./forms/FormBuilder";
 import SingleForm from "./forms/SingleForm";
 
 export {
@@ -14,6 +14,6 @@ export {
     Dashboard,
     NotFound,
     FormPage,
-    CreateForm,
+    FormBuilder,
     SingleForm
 }
