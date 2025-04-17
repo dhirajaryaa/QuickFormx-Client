@@ -28,8 +28,20 @@ export const FormApi = Api.injectEndpoints({
             }),
             transformResponse: (data) => data?.data
         }),
+        // delete new Form 
+        deleteForm: builder.mutation({
+            query: (id) => ({
+                url: `forms/${id}`,
+                method: "DELETE",
+            }),
+            transformResponse: (data) => data?.data
+        }),
 
     }),
 });
 
-export const { useGetAllFormsQuery, useCreateFormMutation,useGetFormQuery } = FormApi
+export const { useGetAllFormsQuery,
+    useCreateFormMutation,
+    useGetFormQuery,
+    useDeleteFormMutation
+} = FormApi

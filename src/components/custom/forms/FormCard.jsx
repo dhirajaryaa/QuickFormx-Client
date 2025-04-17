@@ -1,10 +1,27 @@
 import { Button } from '@/components/ui/button'
-import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card'
+import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
+import {
+    AlertDialog,
+    AlertDialogAction,
+    AlertDialogCancel,
+    AlertDialogContent,
+    AlertDialogDescription,
+    AlertDialogFooter,
+    AlertDialogHeader,
+    AlertDialogTitle,
+    AlertDialogTrigger,
+} from "@/components/ui/alert-dialog"
 import { MessageSquareText, Calendar, Send, Trash2, Edit } from 'lucide-react'
 import { Link, useNavigate } from 'react-router-dom'
+import { useDeleteFormMutation } from '@/app/services/formApi';
+import { useDispatch } from 'react-redux';
+import { toast } from 'sonner';
+import { setForms } from '@/app/features/formSlice';
 
-function FormCard({ form }) {
+function FormCard({ form, refetch }) {
     const navigate = useNavigate()
+    const dispatch = useDispatch()
+    const [isDelete, { isLoading }] = useDeleteFormMutation();
 
     function formatDate(date) {
         return new Date(date).toLocaleDateString("en-IN", {
@@ -20,6 +37,19 @@ function FormCard({ form }) {
 
     function stopBubble(e) {
         e.stopPropagation()
+    }
+
+    function handleDelete(e) {
+
+        isDelete(form._id).unwrap()
+            .then((data) => {
+                refetch().unwrap().then((forms) => {
+                    dispatch(setForms(forms));
+                })
+            }).catch((error) => {
+                toast.error(error?.data?.message);
+            })
+        stopBubble(e)
     }
 
     return (
@@ -70,16 +100,39 @@ function FormCard({ form }) {
                         </Button>
 
                         {/* Delete */}
-                        <Button
-                            variant="destructive"
-                            size="icon"
-                            onClick={(e) => {
-                                stopBubble(e)
-                                handleDelete(form._id)
-                            }}
-                        >
-                            <Trash2 />
-                        </Button>
+
+                        <AlertDialog>
+                            <AlertDialogTrigger asChild>
+                                <Button
+                                    variant="destructive"
+                                    size="icon"
+                                    onClick={(e) => {
+                                        stopBubble(e);
+                                    }}
+                                >
+                                    <Trash2 />
+                                </Button>
+                            </AlertDialogTrigger>
+
+                            <AlertDialogContent>
+                                <AlertDialogHeader>
+                                    <AlertDialogTitle>Delete this form?</AlertDialogTitle>
+                                    <AlertDialogDescription>
+                                        This action cannot be undone. It will permanently delete the form and all its submission data.
+                                    </AlertDialogDescription>
+                                </AlertDialogHeader>
+
+                                <AlertDialogFooter>
+                                    <AlertDialogCancel>Cancel</AlertDialogCancel>
+                                    <AlertDialogAction
+                                        onClick={handleDelete}
+                                    >
+                                        Continue
+                                    </AlertDialogAction>
+                                </AlertDialogFooter>
+                            </AlertDialogContent>
+                        </AlertDialog>
+
                     </div>
                 </div>
             </CardContent>
