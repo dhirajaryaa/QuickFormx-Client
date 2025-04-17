@@ -36,8 +36,7 @@ function FormBuilder() {
   const { refetch } = useGetAllFormsQuery();
   const [addForm, { isLoading }] = useCreateFormMutation();
   const [updateForm] = useUpdateFormMutation();
-  const { data: fetchForm } = useGetFormQuery(formId);
-
+  const { data: fetchForm ,refetch:editRefetch} = useGetFormQuery(formId);
   const { forms: editForms } = useSelector((state) => state.form);
   const { title, description, fields } = useSelector((state) => state.formBuilder);
 
@@ -107,6 +106,9 @@ function FormBuilder() {
         .unwrap()
         .then(() => {
           toast.success('Form Updated 😍');
+          editRefetch().unwrap().then((form)=>{
+            dispatch(setFormData(form))
+          })
           refetch()
             .unwrap()
             .then((forms) => {
