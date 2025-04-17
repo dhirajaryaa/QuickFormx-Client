@@ -77,7 +77,7 @@ function CreateForm() {
             <div className='border-2 w-full rounded-lg p-2 overflow-y-auto md:h-[85vh]'>
               <div className='rounded-lg p-4 w-full'>
                 {/* title  */}
-                <input value={title} onChange={(e) => dispatch(setTitle(e.target.value))} id="title" name="title" className={"border-0 outline-0 text-xl sm:text-2xl font-medium "} placeholder="Untitled Form" />
+                <input value={title} onChange={(e) => dispatch(setTitle(e.target.value))} id="title" name="title" className={"border-0 outline-0 text-xl sm:text-2xl font-medium w-full"} placeholder="Untitled Form" />
                 {/* description  */}
                 <textarea value={description} onChange={(e) => dispatch(setDescription(e.target.value))} id="description" name="description" className={"w-full border-0 outline-0 font-base text-sm mt-3 bg-accent p-3 rounded-lg resize-none"} placeholder="Enter Form Description" rows={5} />
               </div>
