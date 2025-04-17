@@ -6,6 +6,7 @@ import NotFound from "./NotFound";
 import FormPage from "./forms/FormPage";
 import FormBuilder from "./forms/FormBuilder";
 import SingleForm from "./forms/SingleForm";
+import FormSubmission from "./FormSubmission";
 
 export {
     LandingPage,
@@ -15,5 +16,6 @@ export {
     NotFound,
     FormPage,
     FormBuilder,
-    SingleForm
+    SingleForm,
+    FormSubmission
 }
