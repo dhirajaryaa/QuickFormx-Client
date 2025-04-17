@@ -7,10 +7,17 @@ import Layout from '@/layout/Layout'
 import { NotFound } from '..'
 import { Input } from '@/components/ui/input'
 import { Textarea } from '@/components/ui/textarea'
+import { useEffect } from 'react'
+import { useDispatch } from 'react-redux'
+import { setActiveTab } from '@/app/features/uiSlice'
 
 function SingleForm() {
-    const { id } = useParams()
-    const { isLoading, data: form, isError } = useGetFormQuery(id)
+    const { id } = useParams();
+    const dispatch = useDispatch();
+    const { isLoading, data: form, isError } = useGetFormQuery(id);
+    useEffect(()=>{
+        dispatch(setActiveTab("View Form"))
+    },[])
 
     if (isLoading) {
         return (

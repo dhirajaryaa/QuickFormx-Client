@@ -28,6 +28,15 @@ export const FormApi = Api.injectEndpoints({
             }),
             transformResponse: (data) => data?.data
         }),
+        // updata Form 
+        updateForm: builder.mutation({
+            query: ({id,data}) => ({
+                url: `forms/${id}`,
+                method: "PUT",
+                body: JSON.stringify(data)
+            }),
+            transformResponse: (data) => data?.data
+        }),
         // delete new Form 
         deleteForm: builder.mutation({
             query: (id) => ({
@@ -43,5 +52,6 @@ export const FormApi = Api.injectEndpoints({
 export const { useGetAllFormsQuery,
     useCreateFormMutation,
     useGetFormQuery,
-    useDeleteFormMutation
+    useDeleteFormMutation,
+    useUpdateFormMutation
 } = FormApi
