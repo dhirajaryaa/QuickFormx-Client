@@ -17,7 +17,11 @@ export const userSlice = createSlice({
             state.isAuthorized = true;
         },
         // remove user 
-        removeUser: (state) => { initialState }
+        removeUser: (state) => { 
+            state.user = null;
+            state.token = null;
+            state.isAuthorized = false;
+         }
     }
 });
 
