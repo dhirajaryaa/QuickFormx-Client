@@ -1,12 +1,13 @@
 import { SidebarTrigger } from '@/components/ui/sidebar';
 import { Separator } from '@/components/ui/separator';
 import { useSelector } from 'react-redux';
+import { ProfileBtn } from '.';
 
 function Header() {
-    const {activeTab} =  useSelector((state)=>state.ui);
+  const { activeTab } = useSelector((state) => state.ui);
   return (
-    <header className="group-has-data-[collapsible=icon]/sidebar-wrapper:h-12 flex h-12 shrink-0 items-center gap-2 border-b transition-[width,height] ease-linear sticky top-0 bg-background">
-      <div className="flex w-full items-center gap-1 px-4 lg:gap-2 lg:px-6">
+    <header className="group-has-data-[collapsible=icon]/sidebar-wrapper:h-12 flex h-12 shrink-0 items-center gap-2 border-b transition-[width,height] ease-linear sticky top-0 bg-background px-4">
+      <div className="flex w-full items-center gap-1 lg:gap-2 ">
         <SidebarTrigger className="-ml-1" />
         <Separator
           orientation="vertical"
@@ -14,9 +15,9 @@ function Header() {
         />
         <h1 className="text-base sm:text-xl font-medium">{activeTab}</h1>
       </div>
-      <div>
-        user data
-      </div>
+      {/* user profile  */}
+      <ProfileBtn />
+
     </header>
   )
 }
