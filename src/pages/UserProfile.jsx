@@ -39,8 +39,8 @@ function UserProfile() {
             <AvatarFallback className={"text-2xl"}>U</AvatarFallback>
           </Avatar>
           <div>
-            <h1 className="text-3xl font-bold">{user.name}</h1>
-            <p className="text-muted-foreground text-sm text-center">{user.email}</p>
+            <h1 className="text-3xl font-bold">{user?.name}</h1>
+            <p className="text-muted-foreground text-sm text-center">{user?.email}</p>
           </div>
         </div>
 
@@ -55,7 +55,7 @@ function UserProfile() {
           <div className="relative">
             <Input
               type={showKey ? "text" : "password"}
-              value={user.apiKey}
+              value={user?.apiKey}
               readOnly
               className="pr-24"
             />
